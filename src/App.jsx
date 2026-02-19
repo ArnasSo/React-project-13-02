@@ -1,11 +1,10 @@
 import {Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import GamesPage from "./pages/GamesPage";
+import Users from "./pages/Users";
 
 import Header from "./assets/components/header/Header";
 import Footer from "./assets/components/footer/Footer";
-//import GameForm from "./assets/components/GameForm";
-//import GamesList from "./assets/components/GamesList";
 
 export default function App() {
   return (
@@ -15,6 +14,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/games" element={<GamesPage />} />
+        <Route path="/users" element={<Users />} />
 
         {/* optional to redirect to home if there is an unknown path */}
         <Route path="*" element={<Navigate to="/" replace />} />
