@@ -1,24 +1,24 @@
-import Header from "./assets/components/Header";
-import Footer from "./assets/components/Footer";
-import GameForm from "./assets/components/GameForm";
-import GamesList from "./assets/components/GamesList";
+import {Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import GamesPage from "./pages/GamesPage";
+
+import Header from "./assets/components/header/Header";
+import Footer from "./assets/components/footer/Footer";
+//import GameForm from "./assets/components/GameForm";
+//import GamesList from "./assets/components/GamesList";
 
 export default function App() {
   return (
     <>
       <Header />
 
-      <main>
-        <section className="card">
-          <h1 className="h1">Add new game</h1>
-          <GameForm />
-        </section>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/games" element={<GamesPage />} />
 
-        <section className="card">
-          <h2 className="h1">Games</h2>
-          <GamesList />
-        </section>
-      </main>
+        {/* optional to redirect to home if there is an unknown path */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
       <Footer />
     </>
