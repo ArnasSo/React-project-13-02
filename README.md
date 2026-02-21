@@ -44,3 +44,21 @@ npm install
 ```bash
 npm run dev
 ```
+
+## 🧭 Routes
+
+- / → Home / Dashboard
+
+- /games → Games CRUD interface
+
+- /users → Placeholder page
+
+- /settings → Schema / Settings editor
+
+## 💾 Data Storage (localStorage)
+All data is stored directly in the browser using localStorage:
+
+- admin_games_v1 → stores game records
+- admin_settings_v1 → stores schema/settings
+No backend is required to run the application.
+
