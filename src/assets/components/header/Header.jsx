@@ -13,6 +13,8 @@ export default function Header (){
                 <nav className="header__nav" aria-label="Primary">
                     <NavLink to="/" className="header__link">Home</NavLink>
                     <NavLink to="/games" className="header__link">Games</NavLink>
+                    <NavLink to="/users" className="header__link">Users</NavLink>
+                    <NavLink to="/settings" className="header__link">Settings</NavLink>
                 </nav>
             </div>
         </header>

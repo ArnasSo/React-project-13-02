@@ -1,157 +1,124 @@
-import { useState } from "react";
-import "./GameForm.css";
+import { useEffect, useState } from "react";
 
-// Firestore imports for CREATE
-import { db } from "../../firebase";
-import { addDoc, collection } from "firebase/firestore";
+// IMPORTANT: make sure the filename matches your real file name.
+// If your file is settingsStorage.js -> import { getSettings } from "../../services/settingsStorage";
+import { getSettings } from "../../services/settingStorage";
 
-export default function GameForm() {
-  // 1) Form state = what the user has typed
-  const [form, setForm] = useState({
-    name: "",
-    imageUrl: "",
-    "Amount of Players": 2,
-    "Difficulty Level": "",
-    Genre: "",
-    Time: 30,
-    Type: "",
-  });
+/*
+  GameForm Props:
 
-  // 2) Extra state: show loading / disable button while saving
-  const [isSaving, setIsSaving] = useState(false);
+  initialValues:
+  - null => we are creating a new game
+  - object => we are editing an existing game (includes id, createdAt, etc.)
 
-  // Helper to update one field in the form
-  function updateField(key, value) {
-    setForm((prev) => ({ ...prev, [key]: value }));
+  onSubmit:
+  - function passed from GamesPage
+  - we call it with the form data when user clicks Save
+*/
+export default function GameForm({ initialValues = null, onSubmit }) {
+  const [settings, setSettings] = useState(null);
+
+  // "form" is our current input values object
+  const [form, setForm] = useState({});
+
+  /*
+    Build an empty form object using schema defaults.
+
+    Example output:
+    {
+      name: "",
+      imageUrl: "",
+      players: 2,
+      time: 30,
+      ...
+    }
+  */
+  function buildEmptyForm(fields) {
+    const obj = {};
+    fields.forEach((f) => {
+      obj[f.key] = f.defaultValue;
+    });
+    return obj;
   }
 
-  // 3) Submit handler = add to Firestore
-  async function handleSubmit(e) {
+  /*
+    OPTIONAL (but recommended):
+    When saving, only submit schema fields.
+    This prevents accidentally saving id/createdAt/anything extra inside game objects.
+  */
+  function pickSchemaFields(fields, sourceObj) {
+    const cleanObj = {};
+    fields.forEach((f) => {
+      cleanObj[f.key] = sourceObj?.[f.key] ?? f.defaultValue;
+    });
+    return cleanObj;
+  }
+
+  // Load settings once on mount
+  useEffect(() => {
+    const s = getSettings();
+    setSettings(s);
+
+    // Initial form values depend on create vs edit mode
+    if (initialValues) {
+      // Editing: start from the values of the selected game
+      setForm(pickSchemaFields(s.gameFields, initialValues));
+    } else {
+      // Creating: start from schema defaults
+      setForm(buildEmptyForm(s.gameFields));
+    }
+  }, []); // run once
+
+  // If initialValues changes (click Edit on another game), update the form
+  useEffect(() => {
+    if (!settings) return;
+
+    if (initialValues) {
+      setForm(pickSchemaFields(settings.gameFields, initialValues));
+    } else {
+      setForm(buildEmptyForm(settings.gameFields));
+    }
+  }, [initialValues, settings]);
+
+  // Don't render before settings are loaded
+  if (!settings) return null;
+
+  function handleChange(fieldKey, rawValue, type) {
+    // Convert number inputs from string to number
+    const value =
+      type === "number" ? (rawValue === "" ? "" : Number(rawValue)) : rawValue;
+
+    setForm((prev) => ({
+      ...prev,
+      [fieldKey]: value,
+    }));
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
 
-    // Basic validation (minimum)
-    if (!form.name.trim()) {
-      alert("Please enter a name.");
-      return;
-    }
+    // If onSubmit wasn't passed, do nothing (prevents crash)
+    if (!onSubmit) return;
 
-    try {
-      setIsSaving(true);
-
-      // This points to the "games" collection in Firestore
-      const colRef = collection(db, "games");
-
-      // addDoc creates a new document with the object you pass
-      await addDoc(colRef, {
-        ...form,
-
-        // optional: keep things consistent
-        name: form.name.trim(),
-        imageUrl: form.imageUrl.trim(),
-      });
-
-      // Reset form after successful create
-      setForm({
-        name: "",
-        imageUrl: "",
-        "Amount of Players": 2,
-        "Difficulty Level": "",
-        Genre: "",
-        Time: 30,
-        Type: "",
-      });
-    } catch (err) {
-      console.error("Error creating game:", err);
-      alert("Something went wrong while saving. Check console.");
-    } finally {
-      setIsSaving(false);
-    }
+    // Send the form data back to parent (GamesPage)
+    onSubmit(form);
   }
 
   return (
-    <form className="gameForm" onSubmit={handleSubmit}>
-      <div className="gameForm__grid">
-        <div className="gameForm__field">
-          <label className="gameForm__label">Name</label>
+    <form onSubmit={handleSubmit}>
+      {settings.gameFields.map((f) => (
+        <div key={f.key}>
+          <label>{f.label}</label>
+
           <input
-            className="gameForm__input"
-            value={form.name}
-            onChange={(e) => updateField("name", e.target.value)}
-            placeholder="e.g. Catan"
-            required
+            type={f.type}
+            value={form[f.key] ?? ""}
+            onChange={(e) => handleChange(f.key, e.target.value, f.type)}
           />
         </div>
+      ))}
 
-        <div className="gameForm__field">
-          <label className="gameForm__label">Image URL</label>
-          <input
-            className="gameForm__input"
-            value={form.imageUrl}
-            onChange={(e) => updateField("imageUrl", e.target.value)}
-            placeholder="https://..."
-          />
-        </div>
-
-        <div className="gameForm__field">
-          <label className="gameForm__label">Amount of Players</label>
-          <input
-            className="gameForm__input"
-            type="number"
-            min="1"
-            value={form["Amount of Players"]}
-            onChange={(e) =>
-              updateField("Amount of Players", Number(e.target.value))
-            }
-          />
-        </div>
-
-        <div className="gameForm__field">
-          <label className="gameForm__label">Time (minutes)</label>
-          <input
-            className="gameForm__input"
-            type="number"
-            min="1"
-            value={form.Time}
-            onChange={(e) => updateField("Time", Number(e.target.value))}
-          />
-        </div>
-
-        <div className="gameForm__field">
-          <label className="gameForm__label">Difficulty Level</label>
-          <input
-            className="gameForm__input"
-            value={form["Difficulty Level"]}
-            onChange={(e) => updateField("Difficulty Level", e.target.value)}
-            placeholder="Easy / Medium / Hard"
-          />
-        </div>
-
-        <div className="gameForm__field">
-          <label className="gameForm__label">Genre</label>
-          <input
-            className="gameForm__input"
-            value={form.Genre}
-            onChange={(e) => updateField("Genre", e.target.value)}
-            placeholder="Strategy, Party, Co-op..."
-          />
-        </div>
-
-        <div className="gameForm__field">
-          <label className="gameForm__label">Type</label>
-          <input
-            className="gameForm__input"
-            value={form.Type}
-            onChange={(e) => updateField("Type", e.target.value)}
-            placeholder="Card game, Board game..."
-          />
-        </div>
-      </div>
-
-      <div className="gameForm__actions">
-        <button className="gameForm__button" type="submit" disabled={isSaving}>
-          {isSaving ? "Saving..." : "Add game"}
-        </button>
-      </div>
+      <button type="submit">Save</button>
     </form>
   );
 }

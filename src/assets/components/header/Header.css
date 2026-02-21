@@ -44,3 +44,8 @@
 .header__link:hover {
     color: white;
 }
+
+.header__link.active {
+  font-weight: bold;
+  text-decoration: underline;
+}

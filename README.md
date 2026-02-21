@@ -1,18 +1,46 @@
-# React + Vite
+# 🎲 Spilcafe Admin Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple admin interface for managing board games.
 
-Currently, two official plugins are available:
+This project was built as a learning-focused React + Vite application.  
+It supports CRUD operations (Create, Read, Update, Delete) and includes a dynamic schema system that allows game fields to be customized without rewriting UI components.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- ✅ Add new games  
+- ✅ Edit existing games  
+- ✅ Delete games  
+- ✅ Data persistence via **localStorage**  
+- ✅ Dynamic **Settings / Schema editor**  
+- ✅ Form auto-updates based on schema  
+- ✅ List auto-updates based on schema  
 
-Note: This will impact Vite dev & build performances.
+---
 
-## Expanding the ESLint configuration
+## 🧱 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- React Router
+- localStorage (client-side storage)
+
+> Firebase configuration is still present in the project but not currently used.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (LTS recommended)
+- npm (comes with Node)
+
+### Install dependencies
+```bash
+npm install
+```
+### Run dev server
+```bash
+npm run dev
+```
