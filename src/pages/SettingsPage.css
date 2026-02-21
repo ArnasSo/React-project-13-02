@@ -1,0 +1,158 @@
+/* SettingsPage.css */
+/* Adds a little space between cards */
+main {
+  display: grid;
+  gap: 12px;
+}
+.settings__hint {
+  margin-top: 6px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.settings__list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* Each field "card" */
+.settingsField {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: white;
+  padding: 12px;
+}
+
+.settingsField__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.settingsField__key {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.settingsField__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.settingsField__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Add section */
+.settingsAdd {
+  margin-top: 12px;
+}
+
+.settingsAdd__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.settingsAdd__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Shared input styling (matching your GameForm vibe) */
+.settings__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.settings__input {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: white;
+  outline: none;
+}
+
+.settings__input:focus {
+  border-color: rgba(17, 24, 39, 0.6);
+}
+
+.settings__actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Buttons */
+.settings__button {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 0;
+  background: #111827;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settings__button:hover {
+  filter: brightness(1.05);
+}
+
+.settings__danger {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.08);
+  color: rgba(127, 29, 29, 0.95);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settings__danger:hover {
+  filter: brightness(1.02);
+}
+
+.settingsField__topActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.settings__success {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.12);
+  color: rgba(20, 83, 45, 0.95);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.settings__success:hover {
+  filter: brightness(1.03);
+}
+
+/* Desktop layout */
+@media (min-width: 800px) {
+  .settingsField__grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .settingsAdd__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
