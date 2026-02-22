@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-import GameForm from "../assets/components/GameForm";
-import GamesList from "../assets/components/GamesList";
+import GameForm from "./components/GameForm";
+import GamesList from "./components/GamesList";
 
-import { getGames, addGame, updateGame, deleteGame } from "../services/gamesStorage";
-import { getSettings } from "../services/settingStorage";
+import { getGames, addGame, updateGame, deleteGame } from "../../services/gamesStorage";
+import { getSettings } from "../../services/settingStorage";
 
 export default function GamesPage() {
   const [games, setGames] = useState([]);

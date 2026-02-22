@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSettings } from "../../services/settingStorage";
+import { getSettings } from "../../../services/settingStorage";
 import "./GameForm.css"; // ✅ your nice CSS
 
 export default function GameForm({ initialValues = null, onSubmit }) {

@@ -26,8 +26,6 @@ It supports CRUD operations (Create, Read, Update, Delete) and includes a dynami
 - React Router
 - localStorage (client-side storage)
 
-> Firebase configuration is still present in the project but not currently used.
-
 ---
 
 ## 🚀 Getting Started

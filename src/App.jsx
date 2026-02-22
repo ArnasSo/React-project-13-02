@@ -1,11 +1,11 @@
 import {Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import GamesPage from "./pages/GamesPage";
-import Users from "./pages/Users";
+import HomePage from "./pages/Home/HomePage";
+import GamesPage from "./pages/Games/GamesPage";
+import Users from "./pages/Users/Users";
+import SettingsPage from "./pages/Settings/SettingsPage";
 
-import Header from "./assets/components/header/Header";
-import Footer from "./assets/components/footer/Footer";
-import SettingsPage from "./pages/SettingsPage";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 
 export default function App() {
   return (

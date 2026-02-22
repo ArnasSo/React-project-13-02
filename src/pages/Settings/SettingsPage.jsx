@@ -1,7 +1,7 @@
-import "./SettingsPage.css";
+import styles from "./SettingsPage.module.css";
 
 import { useEffect, useState } from "react";
-import { getSettings, saveSettings } from "../services/settingStorage";
+import { getSettings, saveSettings } from "../../services/settingStorage";
 // ^ adjust path if your SettingsPage is in a different folder
 
 export default function SettingsPage() {
@@ -144,28 +144,28 @@ export default function SettingsPage() {
     }
 
     return (
-        <main>
+        <main className={styles.page}>
             {/* Card 1: Current fields */}
-            <section className="card settings">
+            <section className={`card ${styles.settings}`}>
                 <h1 className="h1">Settings</h1>
-                <p className="settings__hint">
+                <p className={styles.hint}>
                     Edit your Game schema fields here. Changes are saved automatically.
                 </p>
 
                 <h2 className="h1">Current Fields</h2>
 
-                <div className="settings__list">
+                <div className={styles.list}>
                     {settings.gameFields.map((field, index) => (
-                        <article className="settingsField" key={field.key}>
-                            <div className="settingsField__top">
-                                <p className="settingsField__key">
+                        <article className={styles.fieldCard} key={field.key}>
+                            <div className={styles.fieldTop}>
+                                <p className={styles.fieldKey}>
                                     <strong>Key:</strong> {field.key}
                                 </p>
 
-                                <div className="settingsField__topActions">
+                                <div className={styles.topActions}>
                                     {isFieldDirty(index) && (
                                         <button
-                                            className="settings__success"
+                                            className={styles.success}
                                             onClick={() => saveField(index)}
                                             type="button"
                                         >
@@ -174,7 +174,7 @@ export default function SettingsPage() {
                                     )}
 
                                     <button
-                                        className="settings__danger"
+                                        className={styles.danger}
                                         onClick={() => deleteField(index)}
                                         type="button"
                                     >
@@ -182,20 +182,20 @@ export default function SettingsPage() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="settingsField__grid">
-                                <div className="settingsField__item">
-                                    <label className="settings__label">Label</label>
+                            <div className={styles.fieldGrid}>
+                                <div className={styles.fieldItem}>
+                                    <label className={styles.label}>Label</label>
                                     <input
-                                        className="settings__input"
+                                        className={styles.input}
                                         value={field.label}
                                         onChange={(e) => updateField(index, "label", e.target.value)}
                                     />
                                 </div>
 
-                                <div className="settingsField__item">
-                                    <label className="settings__label">Type</label>
+                                <div className={styles.fieldItem}>
+                                    <label className={styles.label}>Type</label>
                                     <select
-                                        className="settings__input"
+                                        className={styles.input}
                                         value={field.type}
                                         onChange={(e) => updateField(index, "type", e.target.value)}
                                     >
@@ -204,10 +204,10 @@ export default function SettingsPage() {
                                     </select>
                                 </div>
 
-                                <div className="settingsField__item">
-                                    <label className="settings__label">Default Value</label>
+                                <div className={styles.fieldItem}>
+                                    <label className={styles.label}>Default Value</label>
                                     <input
-                                        className="settings__input"
+                                        className={styles.input}
                                         type={field.type}
                                         value={field.defaultValue ?? ""}
                                         onChange={(e) => {
@@ -227,35 +227,35 @@ export default function SettingsPage() {
             </section>
 
             {/* Card 2: Add new field */}
-            <section className="card settings">
+            <section className={`card ${styles.settings}`}>
                 <h2 className="h1">Add New Field</h2>
 
-                <div className="settingsAdd">
-                    <div className="settingsAdd__grid">
-                        <div className="settingsAdd__item">
-                            <label className="settings__label">Key (no spaces, unique)</label>
+                <div className={styles.add}>
+                    <div className={styles.addGrid}>
+                        <div className={styles.addItem}>
+                            <label className={styles.label}>Key (no spaces, unique)</label>
                             <input
-                                className="settings__input"
+                                className={styles.input}
                                 value={newField.key}
                                 onChange={(e) => setNewField((p) => ({ ...p, key: e.target.value }))}
                                 placeholder="example: minAge"
                             />
                         </div>
 
-                        <div className="settingsAdd__item">
-                            <label className="settings__label">Label (shown in UI)</label>
+                        <div className={styles.addItem}>
+                            <label className={styles.label}>Label (shown in UI)</label>
                             <input
-                                className="settings__input"
+                                className={styles.input}
                                 value={newField.label}
                                 onChange={(e) => setNewField((p) => ({ ...p, label: e.target.value }))}
                                 placeholder="example: Minimum Age"
                             />
                         </div>
 
-                        <div className="settingsAdd__item">
-                            <label className="settings__label">Type</label>
+                        <div className={styles.addItem}>
+                            <label className={styles.label}>Type</label>
                             <select
-                                className="settings__input"
+                                className={styles.input}
                                 value={newField.type}
                                 onChange={(e) => setNewField((p) => ({ ...p, type: e.target.value }))}
                             >
@@ -264,10 +264,10 @@ export default function SettingsPage() {
                             </select>
                         </div>
 
-                        <div className="settingsAdd__item">
-                            <label className="settings__label">Default Value</label>
+                        <div className={styles.addItem}>
+                            <label className={styles.label}>Default Value</label>
                             <input
-                                className="settings__input"
+                                className={styles.input}
                                 type={newField.type}
                                 value={newField.defaultValue}
                                 onChange={(e) =>
@@ -277,8 +277,8 @@ export default function SettingsPage() {
                         </div>
                     </div>
 
-                    <div className="settings__actions">
-                        <button className="settings__button" onClick={addField} type="button">
+                    <div className={styles.actions}>
+                        <button className={styles.button} onClick={addField} type="button">
                             Add field
                         </button>
                     </div>

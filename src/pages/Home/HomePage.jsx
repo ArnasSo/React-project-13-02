@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-// localStorage instead of Firebase
-import { getGames } from "../services/gamesStorage";
+import { getGames } from "../../services/gamesStorage";
 import { useLocation } from "react-router-dom";
 
 export default function HomePage() {
