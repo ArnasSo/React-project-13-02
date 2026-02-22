@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getSettings } from "../../../services/settingStorage";
-import "./GameForm.css"; // ✅ your nice CSS
+import "./GameForm.css";
 
 export default function GameForm({ initialValues = null, onSubmit }) {
   const [settings, setSettings] = useState(null);
