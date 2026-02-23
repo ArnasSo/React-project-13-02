@@ -59,6 +59,12 @@ export default function GameForm({ initialValues = null, onSubmit }) {
     e.preventDefault();
     if (!onSubmit) return;
     onSubmit(form);
+
+    // clear form ONLY when creating a new game
+    // if (!initialValues)
+    {
+      setForm(buildEmptyForm(settings.gameFields));
+    }
   }
 
   return (

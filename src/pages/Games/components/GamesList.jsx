@@ -39,7 +39,7 @@ export default function GamesList({ games, gameFields = [], onEdit, onDelete }) 
                     but keeping title as game.name is fine */}
                 <h3 className="gameCard__title">{game.name || "(no name)"}</h3>
 
-                {/* ✅ Show fields based on schema */}
+                {/* Show fields based on schema */}
                 {gameFields
                   // Optional: don't show imageUrl as text since we already show the image
                   .filter((f) => f.key !== "imageUrl" && f.key !== "name")

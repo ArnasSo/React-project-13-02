@@ -1,6 +1,6 @@
 .gameForm__grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
@@ -37,7 +37,7 @@
 
 .gameForm__button {
   height: 40px;
-  padding: 0 14px;
+  padding: 0 24px;
   border-radius: 10px;
   border: 0;
   background: #111827;
@@ -48,11 +48,4 @@
 
 .gameForm__button:hover {
   filter: brightness(1.05);
-}
-
-/* Desktop layout */
-@media (min-width: 800px) {
-  .gameForm__grid {
-    grid-template-columns: 1fr 1fr;
-  }
 }

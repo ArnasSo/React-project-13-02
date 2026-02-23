@@ -5,7 +5,7 @@
 
 .games__grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
@@ -136,14 +136,3 @@
   gap: 6px;
 }
 
-@media (min-width: 800px) {
-  .gameCard__editGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 800px) {
-  .games__grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}

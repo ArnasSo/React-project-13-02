@@ -1,9 +1,16 @@
+import styles from "./GamesPage.module.css";
+
 import { useEffect, useState } from "react";
 
 import GameForm from "./components/GameForm";
 import GamesList from "./components/GamesList";
 
-import { getGames, addGame, updateGame, deleteGame } from "../../services/gamesStorage";
+import {
+  getGames,
+  addGame,
+  updateGame,
+  deleteGame,
+} from "../../services/gamesStorage";
 import { getSettings } from "../../services/settingStorage";
 
 export default function GamesPage() {
@@ -12,6 +19,9 @@ export default function GamesPage() {
 
   // store schema fields in state
   const [gameFields, setGameFields] = useState([]);
+
+  // state for search input
+  const [searchQuery, setSearchQuery] = useState(""); // we want initial value to be empty that's why we use ""
 
   function refreshGames() {
     setGames(getGames());
@@ -25,13 +35,12 @@ export default function GamesPage() {
   // Load schema once + keep it updated if you want
   useEffect(() => {
     // Load current schema fields
-    const s = getSettings();
+    const s = getSettings(); // s for schema
     setGameFields(s.gameFields);
 
     // OPTIONAL: if you want GamesPage to react when schema changes in another tab
     // window.addEventListener("storage", ...) could be used later.
   }, []);
-
 
   function handleCreate(gameData) {
     addGame(gameData);
@@ -54,6 +63,16 @@ export default function GamesPage() {
     setEditing(game);
   }
 
+  const filteredGames = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase(); // q for "query"
+    if (!q) return games;
+
+    return games.filter((g) => {
+      const title = (g.name ?? "").toString().toLowerCase(); // g for "game"
+      return title.includes(q);
+    });
+  }, [games, searchQuery]);
+
   return (
     <main>
       <section className="card">
@@ -65,16 +84,26 @@ export default function GamesPage() {
         />
 
         {editing && (
-          <button onClick={() => setEditing(null)}>Cancel edit</button>
+          <button className={styles.cancelBtn} onClick={() => setEditing(null)}>
+            Cancel edit
+          </button>
         )}
       </section>
 
       <section className="card">
         <h2 className="h1">Games</h2>
 
-        {/* pass schema fields into list */}
+        {/* Search field */}
+        <input
+          className={styles.inputSearch}
+          type="search"
+          placeholder="Search by title…"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
         <GamesList
-          games={games}
+          games={filteredGames}
           gameFields={gameFields}
           onEdit={handleEdit}
           onDelete={handleDelete}

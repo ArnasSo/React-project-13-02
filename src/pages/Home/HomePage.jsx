@@ -38,11 +38,13 @@ export default function HomePage() {
 
       <section className="card">
         <h2 className="h1">Overview</h2>
-
+        <div style={{ display: "grid", gap: 12 }}>
+        <Link to="/">Search Games</Link>
         <p>
           Total Games:{" "}
           {totalGames === null ? "Loading..." : totalGames}
         </p>
+        </div>
       </section>
     </main>
   );
